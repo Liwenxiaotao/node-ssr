@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}标题{% endblock  %}</title>
+    {% block head %}
+        meta标签
+    {% endblock  %}
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    {% block styles %}
+        css代码
+    {% endblock  %}
+</head>
+<body>
+    {% block header %}
+
+    {% endblock  %}
+    <div id="app">
+        {% block content %}
+            真正的业务代码
+        {% endblock  %}
+    </div>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script src="https://cdn.bootcss.com/x-tag/2.0.9-alpha/x-tag-polyfilled.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
+    <script>
+        // 实现单页
+        $(document).pjax('a', '#app')
+    </script>
+    {% block scripts %}
+        scripts代码
+    {% endblock  %}
+</body>
+</html>
