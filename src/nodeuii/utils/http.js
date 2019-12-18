@@ -3,7 +3,7 @@ class Http {
   // 向后台发送请求
   fetch(url, options) {
     return new Promise((resolve, reject) => {
-      let result = {code: 0, msg: '请求失败'}  
+      let result = {code: 0, msg: '请求失败'}
       fetch(url, options)
       .then((res) => {
         try{
@@ -19,6 +19,7 @@ class Http {
         resolve(body)
       })
       .catch(() => {
+        // 发邮件 打电话
         result.code = 2
         result.msg = '请求后台出错'
         reject(result)

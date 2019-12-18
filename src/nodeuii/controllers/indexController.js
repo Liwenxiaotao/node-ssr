@@ -1,14 +1,15 @@
-const Index = require('../models/indexmodel.js')
 const cheerio = require('cheerio')
+const { route, GET } = require('awilix-koa')
 
-const index = new Index()
+@route('/index')
 class IndexController {
-  constructor() {
-
+  constructor({ indexService }) {
+    this.indexService = indexService
   }
-
+  @route('/list')
+  @GET()
   async actionIndex(ctx, next) {
-    const result = await index.getData('http://localhost:8888/api/blog/list', {})
+    const result = await this.indexService.getData('http://localhost:8888/api/blog/list', {})
     const html = await ctx.render('blog/pages/index', { items: result.result })
     if (ctx.headers['x-pjax']) {
       // 分析html字符串
@@ -18,6 +19,8 @@ class IndexController {
       ctx.body = html
     }
   }
+  @route('/add')
+  @GET()
   async actionAdd(ctx, next) {
     const html = await ctx.render('blog/pages/add')
     if (ctx.headers['x-pjax']) {

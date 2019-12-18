@@ -10,12 +10,12 @@ import Http from '../utils/http'
  * @class
  */
 
-class Index {
+class IndexService {
   /**
    * @constructor
    */
   constructor() {
-
+    this.a = 1
   }
   /**
    * 获取后台全部数据
@@ -24,11 +24,11 @@ class Index {
    * @example
    * return new Promise
    * getGate(url, option)
-   * 
+   *
    */
   getData(url, option) {
     return Http.fetch(url, option)
   }
 }
 
-module.exports = Index
+module.exports = IndexService

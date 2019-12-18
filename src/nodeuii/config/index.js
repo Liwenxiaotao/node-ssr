@@ -1,12 +1,12 @@
 const { resolve } = require('path')
 const _= require('lodash')
-let config = {
+let config = {  // 设置静态资源
   viewDir: resolve(__dirname, '..', 'views'),
   staticDir: resolve(__dirname, '..', 'assets')
 }
 
 if (false) {
-  
+
 }
 
 if (process.env.NODE_ENV === 'development') {

@@ -12,7 +12,11 @@ function builddev() {
     gulp.src('src/nodeuii/**/*.js')
       .pipe(babel({
         babelrc: false,
-        "plugins": ["transform-es2015-modules-commonjs"]
+        "plugins": [
+          ["@babel/plugin-proposal-decorators", { "legacy": true }],
+          ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+          "transform-es2015-modules-commonjs"
+        ]
       }))
       .pipe(gulp.dest('dist'))
   })
@@ -23,7 +27,11 @@ function buildprod() {
     .pipe(babel({
       babelrc: false,
       ignore: ['./src/nodeuii/config/index.js'],
-      "plugins": ["transform-es2015-modules-commonjs"]
+      "plugins": [
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+        "transform-es2015-modules-commonjs"
+      ]
     }))
     .pipe(gulp.dest('dist'))
 }
