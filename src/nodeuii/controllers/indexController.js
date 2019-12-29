@@ -11,10 +11,11 @@ class IndexController {
   async actionIndex(ctx, next) {
     const result = await this.indexService.getData('http://localhost:8888/api/blog/list', {})
     const html = await ctx.render('blog/pages/index', { items: result.result })
-    if (ctx.headers['x-pjax']) {
+    if (ctx.headers['x-pjax']) {  // 特殊请求头，判断是否是站内切换
       // 分析html字符串
       const $ = cheerio.load(html)
-      ctx.body = $('#app').html()
+      // 因js在#app之外，所以需要把js重新插到#app中去
+      ctx.body = $('#app').append($('.preloadjs')).html();
     } else {
       ctx.body = html
     }
@@ -30,7 +31,8 @@ class IndexController {
       // scripts.each(function() {
       //   _html += `<script src="${$(this).attr('src')}"></script>`
       // })
-      ctx.body = $('#app').html()
+      // 因js在#app之外，所以需要把js重新插到#app中去
+      ctx.body = $('#app').append($('.preloadjs')).html();
     } else {
       ctx.body = html
     }

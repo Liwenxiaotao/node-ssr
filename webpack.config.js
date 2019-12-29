@@ -1,4 +1,5 @@
 const merge = require('webpack-merge')
+const webpack = require('webpack')
 // 解析参数
 const argv = require('yargs-parser')(process.argv.slice(2))
 const mode = argv.mode || "development"
@@ -7,9 +8,8 @@ const mergeConfig = require(`./config/webpack.${mode}.js`)
 const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
-const LiveReloadPlugin = require('webpack-livereload-plugin');
-const HtmlAfterWebpackPlugin = require('./plugins/HtmlAfterWebpackPlugin')
-const ManifestPlugin = require('webpack-manifest-plugin');
+const HtmlAfterWebpackPlugin = require('./plugins/HtmlAfterWebpackPlugin')  // 自定义的插件,替换路径和插入css、js
+const ManifestPlugin = require('webpack-manifest-plugin');  // 生成manifest.json 保存所有文件构建之后所对应的位置
 
 // 入口文件
 // {
@@ -19,6 +19,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 let _entry = {}
 // 插件
 let _plugin = []
+// 找到所有入口文件：以.entry.js结尾
 const files = glob.sync('./src/webapp/views/**/*.entry.js')
 const reg = /.+\/([a-zA-Z]+-[a-zA-Z]+)(\.entry\.js$)/
 
@@ -27,7 +28,7 @@ for(let item of files) {
     const key = RegExp.$1
     _entry[key] = item
     const [dist, template] = key.split('-')
-    _plugin.push(new HtmlWebpackPlugin({           // 处理模板
+    _plugin.push(new HtmlWebpackPlugin({           // 处理模板，对应放入模板插入相应的js
       title: template,
       filename: `../views/${dist}/pages/${template}.html`,
       template: `src/webapp/views/${dist}/pages/${template}.html`,
@@ -43,11 +44,11 @@ for(let item of files) {
 
 const webpackConfig = {
   entry: _entry,
+  watch: !_modeFlag,
   plugins: [
     ..._plugin,
     new HtmlAfterWebpackPlugin(),
     new ManifestPlugin(),
-    new LiveReloadPlugin()   // 模块热加载
   ],
   module: {
     rules: [

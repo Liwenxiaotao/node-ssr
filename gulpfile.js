@@ -1,3 +1,4 @@
+// 后台使用gulp，不需要打包
 const gulp = require('gulp')
 // 打包工具
 const rollup = require('gulp-rollup')
@@ -41,12 +42,12 @@ function bulidconfig() {
   return gulp.src('src/nodeuii/**/*.js')
     .pipe(rollup({
       output: {
-        format: 'cjs'
+        format: 'cjs'  // commonjs
       },
       input: "./src/nodeuii/config/index.js",
       plugins: [
         replace({
-          "process.env.NODE_ENV": JSON.stringify('production')
+          "process.env.NODE_ENV": JSON.stringify('production') // 清洗config文件
         })
       ]
     }))
