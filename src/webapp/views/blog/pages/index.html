@@ -1,4 +1,4 @@
-{% extends '../../common/layout.html' %}
+{% extends 'common:layout.html' %}
 {% block title %} index {% endblock %}
 {% block head %}
 
@@ -10,6 +10,7 @@
 
 {% block header %}
   {% include "components:banner/banner.html" %}
+
 {% endblock  %}
 
 {% block content %}
@@ -18,5 +19,6 @@
 
 {% block scripts %}
   <!-- injectjs -->
+  <!-- 注入js -->
 {% endblock  %}
 

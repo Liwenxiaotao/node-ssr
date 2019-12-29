@@ -38,5 +38,5 @@ errorHandle.error(app, logger)
 app.use(router(initController))
 
 app.listen(config.port, function() {
-  console.log('服务已启动')
+  console.log(`服务已启动啦！！！>>>>> ${config.ip}:${config.port}`);
 })

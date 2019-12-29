@@ -6,11 +6,12 @@ let config = {
 }
 
 if (false) {
-  
+
 }
 
 if (process.env.NODE_ENV === 'development') {
   const devConfig = {
+    ip: '127.0.0.1',
     port: 3000
   }
   config = _.extend(config, devConfig)

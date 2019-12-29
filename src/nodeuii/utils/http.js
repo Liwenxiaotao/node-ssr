@@ -3,7 +3,7 @@ class Http {
   // 向后台发送请求
   fetch(url, options) {
     return new Promise((resolve, reject) => {
-      let result = {code: 0, msg: '请求失败'}  
+      let result = {code: 0, msg: '请求失败啦'}
       fetch(url, options)
       .then((res) => {
         try{

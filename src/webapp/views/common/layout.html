@@ -9,6 +9,12 @@
         meta标签
     {% endblock  %}
     <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <!-- livereload.js跟LiveReloadPlugin搭配使用，实现自动刷新页面，需要webpack加上watch参数 -->
+    <script src="http://localhost:35729/livereload.js"></script>
+    <!-- 用于组件化开发 -->
+    <script src="https://cdn.bootcss.com/x-tag/2.0.9-alpha/x-tag-polyfilled.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
     {% block styles %}
         css代码
     {% endblock  %}
@@ -22,12 +28,8 @@
             真正的业务代码
         {% endblock  %}
     </div>
-    <script src="http://localhost:35729/livereload.js"></script>
-    <script src="https://cdn.bootcss.com/x-tag/2.0.9-alpha/x-tag-polyfilled.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js"></script>
     <script>
-        // 实现单页
+        // 实现单页，可看做切换a标签时，发送了ajax，并把返回的html填充到#app,防止重复加载重复的js
         $(document).pjax('a', '#app')
     </script>
     {% block scripts %}

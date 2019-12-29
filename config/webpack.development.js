@@ -1,5 +1,6 @@
 const CopyPlugin = require('copy-webpack-plugin');
-const path = require('path')
+const path = require('path');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
 console.log(path.join(__dirname, '../', '/src/webapp/components'))
 module.exports = {
   plugins: [
@@ -17,5 +18,6 @@ module.exports = {
     ], {
       ignore: ['*.js', '*.css']
     }),
+    new LiveReloadPlugin(),   // 模块热加载
   ],
 };

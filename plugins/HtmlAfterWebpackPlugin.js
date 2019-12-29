@@ -18,13 +18,15 @@ function assets(data) {
   }
 }
 // components: => ../../../components/
+// common: => ../../common/
 class HtmlAfterWebpackPlugin {
     apply(compiler) {
         compiler.hooks.compilation.tap(pluginName, compilation => {
           compilation.hooks.htmlWebpackPluginAfterHtmlProcessing.tap(pluginName, htmlPluginData => {
             let _html = htmlPluginData.html
+            // 转化模板中简化的路径为正确路径
             _html =  _html.replace(/components:/g, '../../../components/')
-
+            _html =  _html.replace(/common:/g, '../../common/')
             const result = assets(htmlPluginData.assets);
             _html = _html.replace('<!-- injectcss -->',result.css.join(''))
             _html = _html.replace('<!-- injectjs -->',result.js.join(''))
