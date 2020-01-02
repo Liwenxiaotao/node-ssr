@@ -1,6 +1,7 @@
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
+const minify = require('html-minifier').minify;
 console.log(path.join(__dirname, '../', '/src/webapp/components'))
 module.exports = {
   plugins: [
@@ -13,7 +14,12 @@ module.exports = {
     new CopyPlugin([
       {
         from: path.join(__dirname, '../', '/src/webapp/components'),
-        to: '../components'
+        to: '../components',
+        transform(content, path) {
+          return minify(content.toString('utf-8'), {
+            removeAttributeQuotes: true
+          });
+        },
       }
     ], {
       ignore: ['*.js', '*.css']

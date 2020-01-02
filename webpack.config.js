@@ -10,7 +10,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const HtmlAfterWebpackPlugin = require('./plugins/HtmlAfterWebpackPlugin')  // 自定义的插件,替换路径和插入css、js
 const ManifestPlugin = require('webpack-manifest-plugin');  // 生成manifest.json 保存所有文件构建之后所对应的位置
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 把CSS从js中提取出来
+const postcssPresetEnv = require('postcss-preset-env');
 // 入口文件
 // {
 //   "blog-add": "blog-add.entry.js"
@@ -42,11 +43,41 @@ for(let item of files) {
   }
 }
 
+const cssLoader = [MiniCssExtractPlugin.loader,
+  {
+    loader: 'css-loader',
+    options: {
+      // minimize: _modeFlag,
+      importLoaders: 1
+    },
+  },
+  {
+    loader:'postcss-loader',
+    options: {
+      ident: 'postcss',
+      plugins: () => [
+        postcssPresetEnv({
+          stage: 3,
+          features: {
+            'nesting-rules': true
+          }
+        }),
+        require('autoprefixer')
+      ]
+    }
+  },
+]
+// 开发环境css热更新
+!_modeFlag && cssLoader.unshift('css-hot-loader')
 const webpackConfig = {
   entry: _entry,
   watch: !_modeFlag,
   plugins: [
     ..._plugin,
+    new MiniCssExtractPlugin({
+      filename: _modeFlag ? 'styles/[name].[contenthash:5].css' : 'style/[name].css',
+      chunkFilename: _modeFlag ? 'styles/[name].[contenthash:5].css' : 'style/[name].css',
+    }),
     new HtmlAfterWebpackPlugin(),
     new ManifestPlugin(),
   ],
@@ -54,10 +85,7 @@ const webpackConfig = {
     rules: [
       {
         test: /\.css$/,
-        use: [
-          { loader: "style-loader" },
-          { loader: "css-loader" }
-        ]
+        use: cssLoader
       }
     ]
   },
@@ -66,7 +94,22 @@ const webpackConfig = {
     path: path.join(__dirname, './dist/assets'),
     publicPath: '/',
     filename: "scripts/[name].bundle.js"
-  }
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {   // 提取公用包
+          chunk: 'initial',
+          name: 'common',
+          minChunks: 3,
+          minSize: 0
+        },
+      },
+    },
+    runtimeChunk: {
+      name: 'runtime'     // 提取webpack核心代码
+    },
+  },
 }
 
 module.exports = merge(webpackConfig, mergeConfig)

@@ -14,7 +14,6 @@ const { scopePerRequest, loadControllers } = require('awilix-koa')
 const app = new koa();
 // 创建一个容器管理服务和路由
 const container = createContainer();
-// 把所有service注册进容器
 // 每一个controlor把需要的service注入进去
 container.loadModules([__dirname + '/services/*.js'], {
   formatName: 'camelCase',

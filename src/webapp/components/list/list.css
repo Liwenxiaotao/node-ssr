@@ -1,4 +1,11 @@
+:root {
+  --color: #aaaaaa
+}
 .list {
   width: 80%;
   margin: 20px auto;
+  color: var(--color);
+  th {
+    color: #ff0000;
+  }
 }
