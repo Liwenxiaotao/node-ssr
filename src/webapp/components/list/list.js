@@ -1,4 +1,4 @@
-import ('./list.css')
+require ('./list.css')
 const list = {
   init() {
     console.log('LIST')

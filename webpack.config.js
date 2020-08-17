@@ -12,6 +12,7 @@ const HtmlAfterWebpackPlugin = require('./plugins/HtmlAfterWebpackPlugin')  // �
 const ManifestPlugin = require('webpack-manifest-plugin');  // 生成manifest.json 保存所有文件构建之后所对应的位置
 const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // 把CSS从js中提取出来
 const postcssPresetEnv = require('postcss-preset-env');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 // 入口文件
 // {
 //   "blog-add": "blog-add.entry.js"
@@ -80,6 +81,7 @@ const webpackConfig = {
     }),
     new HtmlAfterWebpackPlugin(),
     new ManifestPlugin(),
+    new CleanWebpackPlugin(),
   ],
   module: {
     rules: [
@@ -99,7 +101,7 @@ const webpackConfig = {
     splitChunks: {
       cacheGroups: {
         commons: {   // 提取公用包
-          chunk: 'initial',
+          chunks: 'initial',
           name: 'common',
           minChunks: 3,
           minSize: 0

@@ -1,4 +1,4 @@
-import('./add.css')
+require('./add.css')
 const add = {
   init() {
     console.log('add')
