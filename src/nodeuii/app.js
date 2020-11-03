@@ -9,7 +9,7 @@ import log4js from 'log4js'
 // import initController from './controllers/index.js'
 import config from './config/index'
 import errorHandle from './middleware/errorHandle'
-const { asClass, asValue,Lifetime, createContainer } = require('awilix')
+const { asClass, asValue,Lifetime, createContainer } = require('awilix') // 装饰器
 const { scopePerRequest, loadControllers } = require('awilix-koa')
 const app = new koa();
 // 创建一个容器管理服务和路由

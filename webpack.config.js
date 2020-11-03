@@ -101,7 +101,7 @@ const webpackConfig = {
     splitChunks: {
       cacheGroups: {
         commons: {   // 提取公用包
-          chunks: 'initial',
+          chunks: 'initial', // all：以上两者都包括、async：只从异步加载得模块（动态加载import()）里面进行拆分、initial：只从入口模块进行拆分
           name: 'common',
           minChunks: 3,
           minSize: 0
